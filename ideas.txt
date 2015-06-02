@@ -1,0 +1,34 @@
+
+
+Beginner, Intermediate, Advanced
+
+Bird song only
+
+Taxonomy:
+    - What order is this bird in?
+    - Which of these N birds is in a different family / order?
+
+Crappier images only
+
+Pic n' Mix: questions of all types, all difficulties
+
+Build-your-own questionnaire
+
+My region only
+
+Bird groups:
+    Warblers
+    Gulls
+    Empids
+    Grouse
+    Raptors
+
+
+
+This is a community-based project. Anyone is welcome to upload images, bird song, or contribute a question.
+
+Some questions are generated automatically based on the media categorization. Others are custom written.
+
+The more media is uploaded and categorized, the better the site.
+
+The code is open source and found on github.
