@@ -15,7 +15,7 @@
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a href="../" class="navbar-brand"><?=$ENV["scriptName"]?></a>
+            <a href="<?=$ENV["relativeRoot"]?>" class="navbar-brand"><?=$ENV["scriptName"]?></a>
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -24,7 +24,7 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="" target="_blank">Github</a></li>
+                <li><a href="http://github.com/benkeen/birddb/" target="_blank">Github</a></li>
             </ul>
         </div>
     </div>

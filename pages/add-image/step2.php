@@ -2,7 +2,7 @@
 <div class="row add-image-form">
     <div class="col-lg-6">
 
-        <h4>Step 2: Image information (1)</h4>
+        <h4>Step 2: Image information</h4>
 
         <?php
         $col1Class = "col-lg-4";

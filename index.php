@@ -1,4 +1,7 @@
 <?php
+$PAGE = array(
+  "title" => "BirdDB"
+);
 require_once("env.php");
 require_once("resources/templates/header.php");
 ?>
