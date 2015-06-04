@@ -1,13 +1,33 @@
 
-<div class="row">
+<div class="row add-image-form">
     <div class="col-lg-6">
+
+        <h4>Step 3: Image information, continued</h4>
 
         <?php
         $col1Class = "col-lg-3";
         $col2Class = "col-lg-9";
         ?>
 
-        <form>
+        <form method="post" action="./">
+            <div class="panel panel-default form-group">
+                <div class="panel-body">
+                    <div class="row form-group">
+                        <div class="col-lg-2">Activity</div>
+                        <div class="col-lg-10">
+                            <input type="radio" name="activity" id="activity-in-flight" />
+                            <label for="activity-in-flight">In flight</label>
+                            <input type="radio" name="activity" id="activity-sitting" />
+                            <label for="activity-sitting">Sitting / Perched</label>
+                            <input type="radio" name="activity" id="activity-swimming" />
+                            <label for="activity-swimming">Swimming</label>
+                            <input type="radio" name="activity" id="activity-swimming" />
+                            <label for="activity-swimming">Other</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row form-group">
                 <div class="<?=$col1Class?>">Image Quality</div>
                 <div class="col-lg-7">
@@ -55,14 +75,15 @@
                 </div>
             </div>
 
+            <input type="submit" name="submit" class="btn btn-success" value="Continue &raquo;" />
 
         </form>
 
 
     </div>
     <div class="col-lg-6">
-        <div class="imageUploadViewer">
-            <img src="<?=$PAGE["imageRelativePath"]?>" />
+        <div class="image-upload-viewer">
+            <img src="<?=AddImage::getImageURL()?>" />
         </div>
     </div>
 

@@ -13,5 +13,4 @@ class Files {
         $extension = ($lowercase) ? mb_strtolower($sections[count($sections) - 1]) : $sections[count($sections) - 1];
         return $extension;
     }
-
 }

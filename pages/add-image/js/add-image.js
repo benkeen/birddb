@@ -21,8 +21,8 @@ $(function () {
 
   // initialize the species typeahead field, and supply the onSelect callback
   utils.speciesTypeahead("#species", function (item) {
-    $("#speciesId").val(item.id);
-    $("#speciesName").val(item.name);
+    $("#speciesId").val(item.value);
+    $("#speciesName").val(item.text);
     $("#single-birds-extra-questions,#extra-questions").removeClass("hidden");
   });
 });

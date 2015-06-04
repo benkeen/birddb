@@ -11,6 +11,7 @@ class Core {
 	private static $dbUsername = "root";
 	private static $dbPassword = "root";
 	private static $errorReporting = 2047;
+    private static $useDBSessions = false;
 
 	public static $db;
 
@@ -27,7 +28,7 @@ class Core {
 		}
 
         self::initDatabase();
-        //self::initSessions();
+        self::initSessions();
 	}
 
 	/**
@@ -38,10 +39,11 @@ class Core {
         self::$db = new Database();
 	}
 
-
 	public static function initSessions() {
 		if (session_id() == '') {
-			new SessionManager();
+            if (self::$useDBSessions) {
+                new SessionManager();
+            }
 			session_start();
 			header("Cache-control: private");
 		}
@@ -62,7 +64,7 @@ class Core {
     }
 
     /**
-     * @access public
+     * @access publicx
      */
     public static function getDbUsername() {
         return self::$dbUsername;

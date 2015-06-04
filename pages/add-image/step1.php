@@ -19,7 +19,7 @@
                         <input type="file" id="image" name="image" />
                     </div>
                     <div class="col-lg-3 pull-right">
-                        <button type="submit" class="btn btn-success">Upload</button>
+                        <input type="submit" name="submit" class="btn btn-success" value="Upload" />
                     </div>
                 </div>
             </div>
