@@ -23,7 +23,7 @@ require_once("../../resources/templates/header.php");
 
 AddImage::displayProgress();
 
-$imageInfo = Images::getImage($_SESSION["imageId"]);
+$imageInfo = (isset($_SESSION["imageId"])) ? Images::getImage($_SESSION["imageId"]) : array();
 $page = AddImage::getPage();
 require_once("step{$page}.php");
 
