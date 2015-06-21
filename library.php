@@ -3,6 +3,7 @@
 // the script requires PHP 5.3+
 
 require_once(__DIR__ . "/resources/classes/AjaxRequest.class.php");
+require_once(__DIR__ . "/resources/classes/Constants.class.php");
 require_once(__DIR__ . "/resources/classes/Core.class.php");
 require_once(__DIR__ . "/resources/classes/Files.class.php");
 require_once(__DIR__ . "/resources/classes/Images.class.php");

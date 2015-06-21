@@ -1,18 +1,19 @@
 <?php
 
 class Images {
-
-    public static function getImageTags() {
-        return Core::$db->query("SELECT * FROM imageTags ORDER BY tagId ASC");
+    //
+    public static function getImageTagList() {
+        return Core::$db->query("SELECT * FROM imageTagList ORDER BY tagId ASC");
     }
 
-    public static function getImageTagCheckboxes() {
-        $response = self::getImageTags();
+    public static function getImageTagCheckboxes($selectedTagIds = array()) {
+        $response = self::getImageTagList();
 
         $lines = ["<ul>"];
         foreach ($response["results"] as $tagInfo) {
             $id = "tag-" . $tagInfo["tagId"];
-            $lines[] = "<li><input type=\"checkbox\" name=\"imageTags[]\" id=\"$id\" value=\"{$tagInfo["tag"]}\" /> "
+            $checked = (in_array($tagInfo["tagId"], $selectedTagIds)) ? "checked=\"checked\"" : "";
+            $lines[] = "<li><input type=\"checkbox\" name=\"imageTags[]\" id=\"$id\" value=\"{$tagInfo["tagId"]}\" $checked /> "
              . "<label for=\"$id\">{$tagInfo["tag"]}</label></li>";
         }
         $lines[] = "</ul>";
@@ -28,8 +29,7 @@ class Images {
         $quotedCols = implode(",", array_keys($params));
         $quotedValues = implode(",", Utils::enquoteArray(array_values($params)));
 
-        $query = "INSERT INTO images ($quotedCols) VALUES ($quotedValues)";
-        $response = Core::$db->query($query);
+        $response = Core::$db->query("INSERT INTO images ($quotedCols) VALUES ($quotedValues)");
 
         return ($response["success"]) ? mysqli_insert_id(Core::$db->getDBLink()) : null;
     }
@@ -38,6 +38,7 @@ class Images {
         $response = Core::$db->query("SELECT * FROM images WHERE imageId = $imageId");
         if ($response["success"]) {
             $data = mysqli_fetch_assoc($response["results"]);
+            $data["imageTags"] = self::getImageTags($imageId);
             return $data;
         } else {
             return null;
@@ -72,5 +73,38 @@ class Images {
     public static function deleteImage($imageId) {
         return Core::$db->query("DELETE FROM images WHERE imageId = $imageId");
     }
-}
 
+    public static function deleteImageTags($imageId) {
+        return Core::$db->query("DELETE FROM imageTags WHERE imageId = $imageId");
+    }
+
+    public static function setImageTags($imageId, $tags) {
+        self::deleteImageTags($imageId);
+        foreach ($tags as $tagId) {
+            Core::$db->query("INSERT INTO imageTags VALUES ($imageId, $tagId)");
+        }
+    }
+
+    public static function getImageTags($imageId) {
+        $response = Core::$db->query("SELECT * FROM imageTags WHERE imageId = $imageId");
+        $tags = array();
+        foreach ($response["results"] as $tagInfo) {
+            $tags[] = $tagInfo["tagId"];
+        }
+        return $tags;
+    }
+
+    public static function searchImages($orderField = "imageId", $order = "ASC", $pageSize = 24, $page = 1) {
+        $offset = ($page - 1) * $pageSize;
+        $response = Core::$db->query("
+            SELECT *
+            FROM images
+            WHERE status = 'live'
+            ORDER BY $orderField $order
+            LIMIT $pageSize
+            OFFSET $offset
+        ");
+
+        return $response["results"];
+    }
+}

@@ -7,8 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="<?=$ENV["relativeRoot"]?>/resources/css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+
     <link rel="stylesheet" href="<?=$ENV["relativeRoot"]?>/resources/css/bootswatch.min.css">
     <link rel="stylesheet" href="<?=$ENV["relativeRoot"]?>/resources/css/custom.css">
+
+    <?php
+    if (isset($PAGE["css"])) {
+        $cssArr = $PAGE["css"];
+        if (!is_array($cssArr)) {
+            $cssArr = array($cssArr);
+        }
+        foreach ($cssArr as $css) {
+            echo "<link href=\"{$ENV["relativeRoot"]}/$css\" />\n";
+        }
+    }
+    ?>
 </head>
 <body>
 
@@ -23,6 +38,11 @@
             </button>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li <?php if (@$PAGE["nav"] == Constants::PAGE_ADD_IMAGE) {?>class="active"<?php } ?>><a href="<?=$ENV["relativeRoot"]?>/pages/add-image">Add Image</a></li>
+                <li <?php if (@$PAGE["nav"] == Constants::PAGE_IMAGES) {?>class="active"<?php } ?>><a href="<?=$ENV["relativeRoot"]?>/pages/images">Images</a></li>
+                <li <?php if (@$PAGE["nav"] == Constants::PAGE_STATS) {?>class="active"<?php } ?>><a href="<?=$ENV["relativeRoot"]?>/pages/stats">Stats</a></li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="http://github.com/benkeen/birddb/" target="_blank">Github</a></li>
             </ul>

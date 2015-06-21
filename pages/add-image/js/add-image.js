@@ -9,7 +9,7 @@ $(function () {
       $("#multiple-birds").addClass("hidden");
       $("#numBirds-single-btn").removeClass("btn-unselected").addClass("btn-info");
       $("#numBirds-multiple-btn").removeClass("btn-info").addClass("btn-unselected");
-      $("#species").focus();
+      $("#speciesName").focus();
     } else {
       $("#single-bird").addClass("hidden");
       $("#multiple-birds").removeClass("hidden");
@@ -20,9 +20,14 @@ $(function () {
   });
 
   // initialize the species typeahead field, and supply the onSelect callback
-  utils.speciesTypeahead("#species", function (item) {
+  utils.speciesTypeahead("#speciesName", function (item) {
     $("#speciesId").val(item.value);
-    $("#speciesName").val(item.text);
     $("#single-birds-extra-questions,#extra-questions").removeClass("hidden");
   });
+
+  var $dateTakenField = $('#datetimepicker1');
+  if ($dateTakenField.length) {
+    $dateTakenField.datetimepicker();
+  }
+
 });

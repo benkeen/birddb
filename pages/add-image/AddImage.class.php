@@ -2,7 +2,9 @@
 
 class AddImage {
 
-    private static $numPages = 4;
+    private static $numPages = 5;
+    private static $imagesDir = null;
+    private static $imagesURL = null;
     private static $tmpUploadDir = null;
     private static $tmpUploadURL = null;
 
@@ -11,16 +13,24 @@ class AddImage {
 
         self::$tmpUploadURL = $ENV["relativeRoot"] . "/uploads/tmp";
         self::$tmpUploadDir = realpath(__DIR__ . "/../../uploads/tmp");
+        self::$imagesURL = $ENV["relativeRoot"] . "/uploads";
+        self::$imagesDir = realpath(__DIR__ . "/../../uploads");
 
         if (isset($_GET["step"]) && is_numeric($_GET["step"]) && $_GET["step"] >= 1 && $_GET["step"] <= self::$numPages) {
             self::setPage($_GET["step"]);
 
             // if they're explicitly linking to step 1, remove the uploaded image and clear out the image in the DB
-            if ($_GET["step"] === 1) {
+            if ($_GET["step"] == 1) {
                 self::deleteTmpImage();
-                //Images::deleteImage();
+                self::clearAddImageSession();
             }
         }
+    }
+
+    private static function clearAddImageSession() {
+        $_SESSION["imageId"] = "";
+        $_SESSION["speciesName"] = "";
+        $_SESSION["add-image-page"] = 1;
     }
 
     public static function setPage($page) {
@@ -55,6 +65,12 @@ class AddImage {
                 break;
             case "2":
                 self::step2();
+                break;
+            case "3":
+                self::step3();
+                break;
+            case "4":
+                self::step4();
                 break;
         }
     }
@@ -103,18 +119,65 @@ class AddImage {
         $speciesId = $post["speciesId"];
         $gender    = $post["gender"];
         $age       = $post["age"];
+        $imageTags = isset($post["imageTags"]) ? $post["imageTags"] : array();
 
-        $response = Core::$db->query("
+        Core::$db->query("
             UPDATE images
             SET    numBirds = '$numBirds',
                    gender = '$gender',
                    speciesId = $speciesId,
                    age = '$age'
-            WHERE  imageId = '$id'
+            WHERE  imageId = $id
         ");
 
+        // update whatever list of tags
+        Images::setImageTags($id, $imageTags);
 
-        // now insert any tags
-        //Core::$db->query("DELETE FROM imageTags WHERE");
+        // store the species name in sessions for convenience
+        $_SESSION["speciesName"] = $post["speciesName"];
     }
+
+    public static function step3() {
+        self::setPage(4);
+
+        $id = $_SESSION["imageId"];
+
+        $post = Utils::sanitize($_POST);
+        $activity     = $post["activity"];
+        $proximity    = $post["proximity"];
+        $idDifficulty = $post["idDifficulty"];
+
+        Core::$db->query("
+            UPDATE images
+            SET    activity = '$activity',
+                   proximity = '$proximity',
+                   idDifficulty = '$idDifficulty'
+            WHERE  imageId = $id
+        ");
+    }
+
+    public static function step4() {
+        self::setPage(5);
+
+        $id = $_SESSION["imageId"];
+        $post = Utils::sanitize($_POST);
+        $lat = $post["lat"];
+        $lng = $post["lng"];
+
+        Core::$db->query("
+            UPDATE images
+            SET    status = 'live',
+                   lat = '$lat',
+                   lng = '$lng'
+            WHERE  imageId = $id
+        ");
+
+        $imageInfo = Images::getImage($_SESSION["imageId"]);
+
+        // move the file. She's good to go!
+        $oldPath = self::$tmpUploadDir . "/" . $imageInfo["filename"];
+        $newPath = self::$imagesDir . "/" . $imageInfo["filename"];
+        rename($oldPath, $newPath);
+    }
+
 }
