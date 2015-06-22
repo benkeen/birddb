@@ -17,6 +17,8 @@
                         <option value="">Please select</option>
                         <option value="flying" <?php if ($imageInfo["activity"] == "flying") echo "selected"; ?>>In flight</option>
                         <option value="perched" <?php if ($imageInfo["activity"] == "perched") echo "selected"; ?>>Perched</option>
+                        <option value="crouched" <?php if ($imageInfo["activity"] == "crouched") echo "selected"; ?>>Crouched</option>
+                        <option value="in-nest" <?php if ($imageInfo["activity"] == "in-nest") echo "selected"; ?>>In nest</option>
                         <option value="sitting" <?php if ($imageInfo["activity"] == "sitting") echo "selected"; ?>>Sitting</option>
                         <option value="standing" <?php if ($imageInfo["activity"] == "standing") echo "selected"; ?>>Standing</option>
                         <option value="walking" <?php if ($imageInfo["activity"] == "walking") echo "selected"; ?>>Walking</option>
@@ -25,6 +27,18 @@
                         <option value="unknown" <?php if ($imageInfo["activity"] == "unknown") echo "selected"; ?>>Unknown</option>
                         <option value="other" <?php if ($imageInfo["activity"] == "other") echo "selected"; ?>>Other</option>
                     </select>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="<?=$col1Class?>">Image content</div>
+                <div class="<?=$col2Class?>">
+                    <input type="radio" name="imageContent" id="imageContent-full" value="full" <?php if ($imageInfo["imageContent"] == "full") echo "checked"; ?> />
+                    <label for="imageContent-full">Full bird</label>
+                    <input type="radio" name="imageContent" id="imageContent-face" value="face" <?php if ($imageInfo["imageContent"] == "face") echo "checked"; ?> />
+                    <label for="imageContent-face">Face only</label>
+                    <input type="radio" name="imageContent" id="imageContent-other" value="other" <?php if ($imageInfo["imageContent"] == "other") echo "checked"; ?> />
+                    <label for="imageContent-other">Other</label>
                 </div>
             </div>
 

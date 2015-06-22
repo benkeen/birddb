@@ -96,7 +96,14 @@ class Images {
 
     public static function searchImages($orderField = "imageId", $order = "ASC", $pageSize = 24, $page = 1) {
         $offset = ($page - 1) * $pageSize;
-        $response = Core::$db->query("
+        $countQuery = Core::$db->query("
+            SELECT count(*) as c
+            FROM images
+            WHERE status = 'live'
+        ");
+        $countResult = mysqli_fetch_assoc($countQuery["results"]);
+
+        $searchQuery = Core::$db->query("
             SELECT *
             FROM images
             WHERE status = 'live'
@@ -105,6 +112,11 @@ class Images {
             OFFSET $offset
         ");
 
-        return $response["results"];
+        $result = array(
+            "numResults" => $countResult["c"],
+            "results" => $searchQuery["results"]
+        );
+
+        return $result;
     }
 }

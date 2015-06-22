@@ -46,11 +46,11 @@ label {
     margin-left: 0;
     padding-left: 0;
     -moz-column-count: 3;
-    -moz-column-gap: 20px;
+    -moz-column-gap: 0px;
     -webkit-column-count: 3;
-    -webkit-column-gap: 20px;
+    -webkit-column-gap: 0px;
     column-count: 3;
-    column-gap: 20px;
+    column-gap: 0px;
 }
 
 .question-icon {
@@ -83,7 +83,6 @@ label {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    height: 500px;
     -webkit-column-count: 6;
     -moz-column-count: 6;
     column-count: 6;

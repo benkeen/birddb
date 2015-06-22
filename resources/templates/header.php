@@ -42,6 +42,7 @@
                 <li <?php if (@$PAGE["nav"] == Constants::PAGE_ADD_IMAGE) {?>class="active"<?php } ?>><a href="<?=$ENV["relativeRoot"]?>/pages/add-image">Add Image</a></li>
                 <li <?php if (@$PAGE["nav"] == Constants::PAGE_IMAGES) {?>class="active"<?php } ?>><a href="<?=$ENV["relativeRoot"]?>/pages/images">Images</a></li>
                 <li <?php if (@$PAGE["nav"] == Constants::PAGE_STATS) {?>class="active"<?php } ?>><a href="<?=$ENV["relativeRoot"]?>/pages/stats">Stats</a></li>
+                <li <?php if (@$PAGE["nav"] == Constants::PAGE_MAP) {?>class="active"<?php } ?>><a href="<?=$ENV["relativeRoot"]?>/pages/map">Map</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="http://github.com/benkeen/birddb/" target="_blank">Github</a></li>

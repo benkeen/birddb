@@ -10,7 +10,7 @@ class Stats {
 
     public static function getNumSpecies() {
         $response = Core::$db->query("SELECT count(*) as c FROM images GROUP BY speciesId");
-        $data = mysqli_fetch_assoc($response["results"]);
-        return $data["c"];
+        $numSpecies = mysqli_num_rows($response["results"]);
+        return $numSpecies;
     }
 }
